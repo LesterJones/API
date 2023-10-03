@@ -1,0 +1,30 @@
+import openai
+
+# Go to https://platform.openai.com/account/api-keys.  You will need to create an account, and request
+# an API_KEY.  Once you have a key paste it inside of the quotation marks below.
+API_KEY = ""
+
+
+def paraphrase():
+    phrase = input("What phrase would you like to have rephrased?")
+    n = input("How many variations of the phrase would you like?")
+
+    openai.api_key = API_KEY
+
+    prompt = """Could you please paraphrase the following phrase in """ + str(n) + " different ways." + phrase
+
+    completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system",
+             "content": "You are a helpful assistant with extensive experience in data science and technical writing."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    print(completion.choices[0].message['content'])
+
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+    print(paraphrase())
